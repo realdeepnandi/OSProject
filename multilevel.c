@@ -27,21 +27,21 @@ int time_quantum = 4;
 void getInput(){
 	printf("\n Total Number of Process:\t");
 	scanf("%d",&n);
+	
 	q1 = (struct process *)malloc(n*sizeof(struct process));
 	q2 = (struct process *)malloc(n*sizeof(struct process));
 	q3 = (struct process *)malloc(n*sizeof(struct process));
-	int i;
+	int i,j;
 	for(i=0;i<n;i++){
 		struct process p;
-		printf("\nProcess %d\n\n",i+1);
-		p.arrival_time = (rand())%(n+1);
-		p.pid = i+1;
-		p.burst_time = (rand())%(n+1);
-		p.priority = (rand())%(n+1);
-		
-		printf("\nPId:\t%d",p.pid);
-		printf("\nPriority (1-9):\t%d",p.priority);
+		printf("\nProcess %d\n",i+1);
+		p.arrival_time = (rand())%(n+1);				
+		printf("PId:\t");
+		scanf("%d",&p.pid);
+		printf("Priority (1-9):\t");
+		scanf("%d",&p.priority);
 		printf("\nBurst Time: %d\t",p.burst_time);
+		scanf("%d",&p.burst_time);
 		p.remaining_time = p.burst_time;
 		if(p.priority>0 && p.priority<=3){
 			q1[q1_n++]  = p;
@@ -52,11 +52,12 @@ void getInput(){
 		}		
 	}
 }
-void printQueue(struct process *q,int size){	
-	int i;
+void printQueue(struct process *q,int size){
+int i;	
 	calcWaitingTime(q,size);
 	calcTurnAroundTime(q,size);
 	printf("\nPId\t\tPriority\t\tBurst Time\t\tWaiting Time\t\tTurnAround Time\t\tArrival");
+	
 	for(i=0;i<size;i++){
 		printQueueI(q[i]);
 	}
@@ -73,8 +74,8 @@ void calcWaitingTime(struct process *q,int size){
 	}
 }
 void calcTurnAroundTime(struct process *q,int size){
-	q[0].waiting_time = 0;
 	int i;
+	q[0].waiting_time = 0;
 	for(i=0;i<size;i++){
 		q[i].turnaround_time = q[i].waiting_time + q[i].burst_time;
 	}
@@ -113,9 +114,8 @@ void RoundRobinAlgo(struct process *q,int size){
 	printf("Avg Turnaround Time = %f\n",tat_time*1.0/n); 	
 }
 void RoundRobin(){
-
+	
 	printf("\n\t\tRound Robin\t");
-
 
 	printf("\nPId\t\tPriority\t\tBurst Time\t\tWaiting Time\t\tTurnAround Time");
 	calcWaitingTime(q3,q3_n);
@@ -136,9 +136,7 @@ void PrioSortingAlgorithm(struct process *q,int size){
 	}
 }
 void PrioSorting(){
-
 	printf("\n\t\tPriority Sorting\t");
-	
 	PrioSortingAlgorithm(q2,q2_n);
 	printQueue(q2,q2_n);
 }
@@ -175,7 +173,7 @@ int main(){
 				break;
 		}
 		i++;
-		sleep(10);
+		
 	}
 	printf("\n\n");
 }
