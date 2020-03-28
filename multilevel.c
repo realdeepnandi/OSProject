@@ -30,7 +30,8 @@ void getInput(){
 	q1 = (struct process *)malloc(n*sizeof(struct process));
 	q2 = (struct process *)malloc(n*sizeof(struct process));
 	q3 = (struct process *)malloc(n*sizeof(struct process));
-	for(int i=0;i<n;i++){
+	int i;
+	for(i=0;i<n;i++){
 		struct process p;
 		printf("\nProcess %d\n\n",i+1);
 		p.arrival_time = (rand())%(n+1);
@@ -52,10 +53,11 @@ void getInput(){
 	}
 }
 void printQueue(struct process *q,int size){	
+	int i;
 	calcWaitingTime(q,size);
 	calcTurnAroundTime(q,size);
 	printf("\nPId\t\tPriority\t\tBurst Time\t\tWaiting Time\t\tTurnAround Time\t\tArrival");
-	for(int i=0;i<size;i++){
+	for(i=0;i<size;i++){
 		printQueueI(q[i]);
 	}
 	printf("\n\n");
@@ -64,14 +66,16 @@ void printQueueI(struct process p){
 	printf("\n%d\t\t%d\t\t\t%d\t\t\t%d\t\t\t%d\t\t%d",p.pid,p.priority,p.burst_time,p.waiting_time,p.turnaround_time,p.arrival_time);
 }
 void calcWaitingTime(struct process *q,int size){
+	int i;
 	q[0].waiting_time = 0;
-	for(int i=1;i<size;i++){
+	for(i=1;i<size;i++){
 		q[i].waiting_time = q[i-1].waiting_time + q[i-1].burst_time;
 	}
 }
 void calcTurnAroundTime(struct process *q,int size){
 	q[0].waiting_time = 0;
-	for(int i=0;i<size;i++){
+	int i;
+	for(i=0;i<size;i++){
 		q[i].turnaround_time = q[i].waiting_time + q[i].burst_time;
 	}
 }
@@ -120,8 +124,9 @@ void RoundRobin(){
 	RoundRobinAlgo(q3,q3_n);
 }
 void PrioSortingAlgorithm(struct process *q,int size){
-	for(int i=0;i<size;i++){
-		for(int j=0;j<size;j++){
+	int i,j;
+	for(i=0;i<size;i++){
+		for(j=0;j<size;j++){
 			if(q[j].priority>q[i].priority){
 				struct process t = q[i];
 				q[i] = q[j];
@@ -138,8 +143,9 @@ void PrioSorting(){
 	printQueue(q2,q2_n);
 }
 void FCFSAlgorithm(struct process *q,int size){
-	for(int i=0;i<size;i++){
-		for(int j=0;j<size;j++){
+	int i,j;
+	for(i=0;i<size;i++){
+		for(j=0;j<size;j++){
 			if(q[j].arrival_time>q[i].arrival_time){
 				struct process t = q[i];
 				q[i] = q[j];
