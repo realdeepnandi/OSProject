@@ -1,6 +1,6 @@
-
 #include<stdio.h>
 #include <stdlib.h>
+
 struct process{
 	int priority;
 	int burst_time;
@@ -24,6 +24,27 @@ int q1_n=0,q2_n=0,q3_n=0,n=0;
 struct process *q1,*q2,*q3;
 
 int time_quantum = 4;
+
+int main(){
+	getInput();
+	int i=1;
+	while(n>0){
+		switch(i){
+			case 3:
+				RoundRobin();
+				break;
+			case 2:
+				PrioSorting();
+				break;
+			case 1:
+				FCFS();
+				break;
+		}
+		i++;
+		
+	}
+	printf("\n\n");
+}
 void getInput(){
 	printf("\n Total Number of Process:\t");
 	scanf("%d",&n);
@@ -111,7 +132,8 @@ void RoundRobinAlgo(struct process *q,int size){
 		q[i] = p;
 	}
 	printf("\nAverage Waiting Time= %f\n",wait_time*1.0/n); 
-	printf("Avg Turnaround Time = %f\n",tat_time*1.0/n); 	
+	printf("Avg Turnaround Time = %f\n",tat_time*1.0/n);
+	exit(1); 	
 }
 void RoundRobin(){
 	
@@ -123,7 +145,7 @@ void RoundRobin(){
 
 	RoundRobinAlgo(q3,q3_n);
 }
-void PrioSortingAlgorithm(struct process *q,int size){
+void PrioritySortingAlgorithm(struct process *q,int size){
 	int i,j;
 	for(i=0;i<size;i++){
 		for(j=0;j<size;j++){
@@ -137,7 +159,7 @@ void PrioSortingAlgorithm(struct process *q,int size){
 }
 void PrioSorting(){
 	printf("\n\t\tPriority Sorting\t");
-	PrioSortingAlgorithm(q2,q2_n);
+	PrioritySortingAlgorithm(q2,q2_n);
 	printQueue(q2,q2_n);
 }
 void FCFSAlgorithm(struct process *q,int size){
@@ -156,24 +178,4 @@ void FCFS(){
 	printf("\n\t\tFirst Come First Serve\t");
 	FCFSAlgorithm(q1,q1_n);
 	printQueue(q1,q1_n);
-}
-int main(){
-	getInput();
-	int i=1;
-	while(n>0){
-		switch(i){
-			case 3:
-				RoundRobin();
-				break;
-			case 2:
-				PrioSorting();
-				break;
-			case 1:
-				FCFS();
-				break;
-		}
-		i++;
-		
-	}
-	printf("\n\n");
 }
